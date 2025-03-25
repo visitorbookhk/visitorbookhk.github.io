@@ -1,0 +1,41 @@
+html, body {
+  background-image: url('../img/bg_01.JPG');
+  background-size: '100%';
+  background-repeat: 'repeat';
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-size: 1rem;
+  color: #1B1725;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+img {
+  pointer-events: none;
+}
+
+#container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  cursor: none;
+}
