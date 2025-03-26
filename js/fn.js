@@ -17,6 +17,8 @@ function labArr(arr) {
 }
 
 function checkisReg() {
+  vname = '';
+  regForm = {};
   lifeno = document.getElementById('iv1_lifeno').value;
   (lifeno.length > 0) ? gasIsReg() : gasFullForm();
 }

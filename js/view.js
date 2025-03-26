@@ -302,7 +302,7 @@ function createQrView(code) {
   var html = '';
   html += '        <div class="d-flex col flex-column align-items-center mt-5 mb-5">';
   html += '          <div id="qrcode"></div>';
-  html += '          <p><h1>'+vname+'</h1></p>';
+  html += '          <h3><span class="badge rounded-pill text-bg-primary">'+vname+'</span></h3></div>';
   html += '        </div>';
 
   showAlertModal(lab('100008'), html,'');
