@@ -310,6 +310,14 @@ function createQrView(code) {
   var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io/register?v="+window.btoa(unescape(encodeURIComponent(code))));
 }
 
+function createAccessView(res) {
+  console.log(JSON.stringify(res))
+  var contentHTML = '';
+  contentHTML += '<div class="text-center"><img class="mt-3 mb-3" src="../img/tick_'+res.type+'.gif" class="d-block w-70" alt="">';
+  contentHTML += '<h3><span class="badge rounded-pill text-bg-'+((res.type=='sys')?'success':'danger')+'">'+res.name+'</span></h3></div>';
+  showAlertModal('成功', contentHTML, '');
+}
+
 function createInputView1() {
   var html = '';
   html += '      <div id="inputView1" class="text-center">';
