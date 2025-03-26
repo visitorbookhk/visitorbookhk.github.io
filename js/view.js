@@ -30,11 +30,33 @@ function showAlertModal(title, body, footer) {
   document.getElementById('alertModalTitle').innerHTML = title;
   document.getElementById('alertModalBody').innerHTML = body;
   document.getElementById('alertModalFooter').innerHTML = footer;
-  // $('#alertModal').modal({backdrop: 'static', keyboard: false});
   alertModal.show();
 }
 
-function createFormInputSelect(_key, _options, _values, multi_input) {
+function showInputModal(title, body, footer) {
+  document.getElementById('inputModalTitle').innerHTML = '';
+  document.getElementById('inputModalBody').innerHTML = '';
+  document.getElementById('inputModalFooter').innerHTML = '';
+
+  document.getElementById('inputModalTitle').innerHTML = title;
+  document.getElementById('inputModalBody').innerHTML = body;
+  document.getElementById('inputModalFooter').innerHTML = footer;
+  inputModal.show();
+}
+
+function showConfirmModal(title, body, footer) {
+  inputModal.hide();
+  document.getElementById('confirmModalTitle').innerHTML = '';
+  document.getElementById('confirmModalBody').innerHTML = '';
+  document.getElementById('confirmModalFooter').innerHTML = '';
+
+  document.getElementById('confirmModalTitle').innerHTML = title;
+  document.getElementById('confirmModalBody').innerHTML = body;
+  document.getElementById('confirmModalFooter').innerHTML = footer;
+  confirmModal.show();
+}
+
+function createFormInputSelect(_key, _options, _values, multi_input, _mandatory) {
 
   var input_id = _key;
 
@@ -51,12 +73,20 @@ function createFormInputSelect(_key, _options, _values, multi_input) {
   div.appendChild(select);
   select.id = input_id;
   select.value = _values[0];
+  if (_mandatory) {
+    select.setAttribute('required','true');
+  }
 
   for (var i = 0; i < _values.length; i++) {
     var opt = createCustomElement('option');
     opt.value = _values[i];
     opt.innerHTML = _values[i];
     select.appendChild(opt);
+  }
+
+
+  if (_key == 'reason') {
+    select.setAttribute('onchange', 'return reasonOnchange();');
   }
 
   for (var j = 0; j < multi_input.length; j++) {
@@ -69,7 +99,7 @@ function createFormInputSelect(_key, _options, _values, multi_input) {
       input.setAttribute('aria-label', lab(multi_input[j].placeholder));
       input.setAttribute('aria-describedby', multi_input[j].key); 
       input.setAttribute('disabled', 'disabled'); 
-      input.removeAttribute('disabled');
+      // input.removeAttribute('disabled');
     }
   }
 
@@ -77,7 +107,7 @@ function createFormInputSelect(_key, _options, _values, multi_input) {
   return temp.innerHTML;
 }
 
-function createFormInputText(_key, _label, _placeholder) {
+function createFormInputText(_key, _label, _placeholder, _mandatory) {
 
   var input_id = _key;
 
@@ -97,16 +127,27 @@ function createFormInputText(_key, _label, _placeholder) {
   input.setAttribute('placeholder', _placeholder);
   input.setAttribute('aria-label', _placeholder);
   input.setAttribute('aria-describedby', input_id);
+  if (_mandatory) {
+    input.setAttribute('required','true');
+  }
 
   temp.appendChild(div);
   return temp.innerHTML;
 }
 
-function createFormInputDate(_key, _label) {
+function createFormInputDate(_key, _label, _mandatory) {
 
   var input_id = _key;
 
   var temp = createCustomElement('div');
+
+  var input = createCustomElement('input', 'form-control');
+  temp.appendChild(input);
+  input.id = input_id;
+  input.setAttribute('style','display:none');
+  if (_mandatory) {
+    input.setAttribute('required','true');
+  }
 
   var div = createCustomElement('div', 'input-group mb-3');
 
@@ -122,6 +163,7 @@ function createFormInputDate(_key, _label) {
   inputy.setAttribute('placeholder', lab('100016'));
   inputy.setAttribute('aria-label', lab('100016'));
   inputy.setAttribute('aria-describedby', input_id+'_y');
+  inputy.setAttribute('onchange', 'return dateOnchange("'+input_id+'")');
 
   var inputm = createCustomElement('input', 'form-control');
   div.appendChild(inputm);
@@ -130,6 +172,7 @@ function createFormInputDate(_key, _label) {
   inputm.setAttribute('placeholder', lab('100017'));
   inputm.setAttribute('aria-label', lab('100017'));
   inputm.setAttribute('aria-describedby', input_id+'_m');
+  inputm.setAttribute('onchange', 'return dateOnchange("'+input_id+'")');
 
   var inputd = createCustomElement('input', 'form-control');
   div.appendChild(inputd);
@@ -138,37 +181,124 @@ function createFormInputDate(_key, _label) {
   inputd.setAttribute('placeholder', lab('100018'));
   inputd.setAttribute('aria-label', lab('100018'));
   inputd.setAttribute('aria-describedby', input_id+'_d');
+  inputd.setAttribute('onchange', 'return dateOnchange("'+input_id+'")');
+
+  if (_mandatory) {
+    var today = new Date();
+    inputy.setAttribute('value', today.getFullYear());
+    inputm.setAttribute('value', today.getMonth()+1);
+    inputd.setAttribute('value', today.getDate());
+    var str = inputy.value+'-'+inputm.value+'-'+inputd.value;
+    var date = new Date (str);
+    input.setAttribute('value', (date=='Invalid Date') ? 'Invalid Date' : str);
+  }
 
   temp.appendChild(div);
   return temp.innerHTML;
 }
 
+function reasonOnchange() {
+  var reason = document.getElementById('reason');
+  var input = document.getElementById('reason_other');
+  if (reason.value == lab('100040')) {
+    input.removeAttribute('disabled');
+  }else{
+    input.setAttribute('disabled', 'disabled'); 
+    input.value='';
+  }
+}
+
+function dateOnchange(id) {
+  var input = document.getElementById(id);
+  var inputy = document.getElementById(id+'_y');
+  var inputm = document.getElementById(id+'_m');
+  var inputd = document.getElementById(id+'_d');
+  var str = inputy.value+'-'+inputm.value+'-'+inputd.value;
+  var date = new Date (str);
+  // date.setFullYear(inputy.value, inputm.value+1, inputd.value);
+  if (inputy.value=='' && inputm.value=='' && inputd.value=='') {
+    input.setAttribute('value', '');
+  } else{
+    input.setAttribute('value', (date=='Invalid Date' || inputy.value=='' || inputm.value=='' || inputd.value=='') ? 'Invalid Date' : str);
+  }
+}
+
+function backRegForm() {
+  confirmModal.hide();
+  inputModal.show();
+}
+
+function submitRegForm() {
+  confirmModal.hide();
+  gasSubmitReg();
+}
+
+function createConfrimRegView() {
+
+  var body = '';
+
+  for (var i in regForm) {
+    
+    if (regForm[i].value == lab('100040') && document.getElementById('reason_other').value.length>0) {
+      regForm[i].value += ' ('+document.getElementById('reason_other').value+')';
+    }else{
+      regForm[i].value = document.getElementById(i).value;
+    }
+
+    if (regForm[i].value == 'Invalid Date') {
+      alert(regForm[i].label+': '+lab('100051'));
+      backRegForm();
+      return;
+    }
+    if (regForm[i].value == '' && (document.getElementById(i).required)) {
+      alert(regForm[i].label+': '+lab('100044'));
+      backRegForm();
+      return;
+    }
+    
+    regForm['lifeno'] = {'value': lifeno};
+
+    body += '<span><strong>'+regForm[i].label+':</strong> <p class="text-primary">'+regForm[i].value+'</p></span>';
+  }
+
+
+  var footer = '<button type="button" class="btn btn-secondary" onclick="return backRegForm();">'+lab('100005')+'</button>';
+  footer += '<button type="button" class="btn btn-danger" onclick="return submitRegForm();">'+lab('100050')+'</button>';
+  showConfirmModal(lab('100049'),body,footer);
+}
+
 function createRegView(res) {
+  regForm = {};
   var body = '<div class="alert alert-primary" role="alert">'+lab('100044')+'</div>';
 
   var form = res.regForm;
 
   for (var i=0; i < form.length; i++) {
+    regForm[form[i].key] = {};
+    regForm[form[i].key].label = lab(form[i].label);
     var mandatoryMark = '';
     if (form[i].mandatory==true) {
-      mandatoryMark = '*'
+      mandatoryMark = '*';
     }
     if (form[i].type=='date') {
-      body += createFormInputDate(form[i].key, mandatoryMark+lab(form[i].label));
+      body += createFormInputDate(form[i].key, mandatoryMark+lab(form[i].label), form[i].mandatory);
     }
     if (form[i].type=='text') {
-      body += createFormInputText(form[i].key, mandatoryMark+lab(form[i].label), lab(form[i].placeholder));
+      body += createFormInputText(form[i].key, mandatoryMark+lab(form[i].label), lab(form[i].placeholder), form[i].mandatory);
     }
     if (form[i].type=='select') {
-      body += createFormInputSelect(form[i].key, mandatoryMark+lab(form[i].label), labArr(form[i].values), form[i]['multi-input']? form[i]['multi-input'] : []);
+      body += createFormInputSelect(form[i].key, mandatoryMark+lab(form[i].label), labArr(form[i].values), form[i]['multi-input']? form[i]['multi-input'] : [], form[i].mandatory);
     }
   }
-  showAlertModal(lab('100001'),body,'');
+
+  var footer = '<button type="button" class="btn btn-primary" onclick="return createConfrimRegView();">'+lab('100048')+'</button>';
+
+  showInputModal(lab('100001'),body,footer);
 
 
 }
 
-function createQrView() {
+function createQrView(code) {
   var html = '';
   html += '        <div class="d-flex col flex-column align-items-center mt-5 mb-5">';
   html += '          <div id="qrcode"></div>';
@@ -177,7 +307,7 @@ function createQrView() {
 
   showAlertModal(lab('100008'), html,'');
 
-  var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io/register?v="+window.btoa(unescape(encodeURIComponent(lifeno))));
+  var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io/register?v="+window.btoa(unescape(encodeURIComponent(code))));
 }
 
 function createInputView1() {

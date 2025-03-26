@@ -15,3 +15,4 @@ var gas_vinput = {
 };
 var lifeno = '';
 var vname = '';
+var regForm = {};

@@ -17,13 +17,8 @@ function labArr(arr) {
 }
 
 function checkisReg() {
-  var item1 = document.getElementById('iv1_lifeno').value;
-  if (item1 == '') {
-    alert(lab('100006'));
-  }else{
-    lifeno = item1;
-    gasIsReg();
-  }
+  lifeno = document.getElementById('iv1_lifeno').value;
+  (lifeno.length > 0) ? gasIsReg() : gasFullForm();
 }
 
 function getCSSClassStr(key) {
