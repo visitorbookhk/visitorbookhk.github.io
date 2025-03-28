@@ -16,3 +16,7 @@ var gas_vinput = {
 var lifeno = '';
 var vname = '';
 var regForm = {};
+var gid = '';
+var header = document.getElementById('container_header');
+var content = document.getElementById('container_content');
+var footer = document.getElementById('container_footer');

@@ -20,15 +20,6 @@ img {
   pointer-events: none;
 }
 
-#container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow: auto;
-}
-
 #overlay {
   position: fixed;
   top: 0;
@@ -39,3 +30,50 @@ img {
   z-index: 2;
   cursor: none;
 }
+
+.centered {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+table {
+  position:  relative;
+}
+
+th {
+  background: white;
+  position: sticky;
+  top: 0; /* Don't forget this, required for the stickiness */
+}
+
+#container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
+
+#container_header {
+  padding: 5%;
+}
+
+#container_content {
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.fadein_1s {
+  opacity: 1;
+  animation: fadeIn 1s ease-in-out;
+}
+
+

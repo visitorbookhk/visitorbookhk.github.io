@@ -337,6 +337,100 @@ function createInputView1() {
   setInnerHTMLById('nextBtn', lab('100004'));
 }
 
+function getNavHtml() {
+  var userinfo = getUserInfo();
+  var html = '';
+  html += '<nav class="navbar navbar-expand-lg bg-body-tertiary">';
+  html += '  <div class="container-fluid">';
+  html += '    <a class="navbar-brand" href="#">';
+  html += '      <img src="../img/icon.png" width="30" height="30" alt="">  ';
+  html += userinfo.name;
+  html += '    </a>';
+  html += '    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
+  html += '      <span class="navbar-toggler-icon"></span>';
+  html += '    </button>';
+  html += '    <div class="collapse navbar-collapse" id="navbarSupportedContent">';
+  html += '      <ul class="navbar-nav me-auto mb-2 mb-lg-0">';
+  html += '        <li class="nav-item">';
+  html += '          <a class="nav-link" onclick="return createMainView();">首頁</a>';
+  html += '        </li>';
+  html += '        <li class="nav-item">';
+  html += '          <a class="nav-link" onclick="return createRecordView();">系統記錄</a>';
+  html += '        </li>';
+  html += '      </ul>';
+
+  html += '    <form class="form-inline my-2 my-lg-0">';
+  html += '      <button class="btn btn-danger my-2 my-sm-0" onclick="return logout();">登出</button>';
+  html += '    </form>';
+  html += '    </div>';
+  html += '  </div>';
+  html += '</nav>';
+  return html;
+}
+
+function genSysRecTable(res) {
+  var html='';
+
+  html += '<div class="container col-11 mt-3"><ul class="list-group">';
+
+  var li = '';
+  var progress = '';
+  for (var i = 0; i<res.length; i++) {
+      li += '<li class="list-group-item d-flex justify-content-between align-items-center"><p><strong>';
+      li += res[i].fullname+'</strong><br>';
+      li += res[i].church+'<br>';
+      li += res[i].arrive+' to ';
+      li += res[i].depart+'';
+      li += '</p><h5><span class="badge rounded-pill text-bg-primary">';
+      li += res[i].lang;
+      li += '</span></h5>';
+  }
+  html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
+  html += '<strong>系統記錄</strong>';
+  // html += '<small><span class="badge badge-secondary">';
+  // html += '最後更新: '+res.timestamp;
+  // html += '</span></small>';
+  html += li;
+  html += '</ul>';
+  // html += progress;
+  html + '</div>';
+  return html;
+}
+
+function createMainView() {
+
+  var userinfo = getUserInfo();
+  initViews();
+  if (userinfo.name == null){
+    setHeaderTitle('h2', 'Invalid User');
+    return;
+  }
+  header.innerHTML = getNavHtml();
+
+  var div = createCustomElement('div', 'container col_11');
+  content.appendChild(div);
+  div.id = 'mainPage';
+  div.innerHTML = '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
+
+  var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io");
+}
+
+function createRecordView() {
+  var userinfo = getUserInfo();
+  initViews();
+  if (userinfo.name == null){
+    setHeaderTitle('h2', 'Invalid User');
+    return;
+  }
+  header.innerHTML = getNavHtml();
+
+  var div = createCustomElement('div', 'container col_11');
+  content.appendChild(div);
+  div.id = 'sys_rec';
+  getSysRec();
+  
+}
+
 function createLangView() {
   var html = '';
   html += '      <div class="position-absolute top-50 start-50 translate-middle col-12">';
@@ -350,4 +444,43 @@ function createLangView() {
   html += '      </div>';
 
   setInnerHTMLById('container', html);
+}
+
+function createGLoginView() {
+  initViews();
+  setHeaderTitle('h2', '  ');
+  var div = createCustomElement('div', 'd-flex col flex-column align-items-center');
+  div.id='signin';
+  var div2 = createCustomElement('form', 'form-signin');
+  var div3 = createCustomElement('div', 'text-center');
+  var img = document.createElement('img');
+  img.classList.add('mb-4');
+  img.src = '../img/icon.png';
+  img.width = '150';
+  img.height = '150';
+  div3.appendChild(img);
+  div2.appendChild(div3);
+  var h1 = createCustomElement('h1', 'h1 mb-5 font-weight-normal');
+  h1.innerHTML = 'Visitors';
+  div3.appendChild(h1);
+  var btn_glogin = createCustomElement('btn', 'btn btn-primary btn-block text-center align-self-center mt-3 mb-3');
+  btn_glogin.innerHTML = 'Sign in with Google';
+  btn_glogin.onclick = function() { oauth2SignIn(); };
+  div2.appendChild(btn_glogin);
+  div.appendChild(div2);
+  content.appendChild(div);
+}
+
+function initViews() {
+  header.innerHTML = '';
+  content.innerHTML = '';
+  footer.innerHTML = '';
+}
+
+function setHeaderTitle(ele, text) {
+  header.innerHTML = '';
+
+  var title = createCustomElement(ele, 'title');
+  title.innerHTML = text;
+  header.appendChild(title);
 }
