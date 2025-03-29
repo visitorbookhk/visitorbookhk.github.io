@@ -69,7 +69,7 @@ $(document).ready(function() {
           createMainView();
           off();
         }else if (data.error_code=='106') {
-          alert('您需要存取權限。<br>請求存取權限，或切換具有存取權限的帳戶。');
+          alert('您需要存取權限。\n請求存取權限，或切換具有存取權限的帳戶。');
           logout();
         }else{
           alert('已過期，請重新登入');
