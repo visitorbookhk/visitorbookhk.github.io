@@ -378,6 +378,7 @@ function genSysRecTable(res) {
   for (var i = 0; i<res.length; i++) {
       li += '<li class="list-group-item d-flex justify-content-between align-items-center"><p><strong>';
       li += res[i].fullname+'</strong><br>';
+      li += res[i].age+'<br>';
       li += res[i].church+'<br>';
       li += res[i].arrive+' to ';
       li += res[i].depart+'';
