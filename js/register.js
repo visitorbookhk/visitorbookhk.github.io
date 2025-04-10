@@ -36,6 +36,27 @@ function getSysRec() {
       });
 }
 
+function getTodayAttend() {
+  on();
+      var userinfo = getUserInfo();
+      var url = GAS_URL+'?action=getTodayAttend&id='+userinfo.id;
+
+      $.getJSON(url, function(data) {
+
+        if (data !== null) {
+          if (data.status=='0') {
+            document.getElementById('today_attend').innerHTML = genTodayAttendTable(data.res);
+          }else{
+            alert(data.error_msg);
+            if (data.error_code == '104') {
+              logout();
+            }
+          }
+        }
+        off();
+      });
+}
+
 $(document).ready(function() {
   let urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('v')) {
@@ -66,10 +87,10 @@ $(document).ready(function() {
           window.history.pushState({}, document.title, "?");
           localStorage.setItem('userinfo', JSON.stringify(data.res));
           localStorage.setItem('access_token', access_token);
-          createMainView();
+          createMainView()
           off();
         }else if (data.error_code=='106') {
-          alert('您需要存取權限。\n請求存取權限，或切換具有存取權限的帳戶。');
+          alert('您需要存取權限。<br>請求存取權限，或切換具有存取權限的帳戶。');
           logout();
         }else{
           alert('已過期，請重新登入');

@@ -310,6 +310,13 @@ function createQrView(code) {
   var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io/register?v="+window.btoa(unescape(encodeURIComponent(code))));
 }
 
+function createErrorView(err_msg) {
+  var contentHTML = '';
+  contentHTML += '<div class="text-center"><img class="mt-3 mb-3" src="../img/error.gif" class="d-block w-70" alt="">';
+  contentHTML += '<h3><span class="badge rounded-pill text-bg-danger'+'">'+err_msg+'</span></h3></div>';
+  showAlertModal(lab('100053'), contentHTML, '');
+}
+
 function createAccessView(res) {
   console.log(JSON.stringify(res))
   var contentHTML = '';
@@ -346,16 +353,19 @@ function getNavHtml() {
   html += '      <img src="../img/icon.png" width="30" height="30" alt="">  ';
   html += userinfo.name;
   html += '    </a>';
-  html += '    <button class="navbar-toggler btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
+  html += '    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
   html += '      <span class="navbar-toggler-icon"></span>';
   html += '    </button>';
   html += '    <div class="collapse navbar-collapse" id="navbarSupportedContent">';
   html += '      <ul class="navbar-nav me-auto mb-2 mb-lg-0">';
   html += '        <li class="nav-item">';
-  html += '          <a class="nav-link" onclick="return createMainView();">首頁</a>';
+  html += '          <a class="nav-link" onclick="return createMainView();">訪客登記</a>';
   html += '        </li>';
   html += '        <li class="nav-item">';
   html += '          <a class="nav-link" onclick="return createRecordView();">系統記錄</a>';
+  html += '        </li>';
+  html += '        <li class="nav-item">';
+  html += '          <a class="nav-link" onclick="return createTodayAttendView();">今日訪客</a>';
   html += '        </li>';
   html += '      </ul>';
 
@@ -377,24 +387,45 @@ function genSysRecTable(res) {
   var progress = '';
   for (var i = 0; i<res.length; i++) {
       li += '<li class="list-group-item d-flex justify-content-between align-items-center"><p><strong>';
-      li += res[i].fullname+'</strong><br>';
-      li += res[i].age+'<br>';
-      li += res[i].church+'<br>';
-      li += res[i].arrive+' to ';
-      li += res[i].depart+'';
-      li += '</p><h5><span class="badge rounded-pill text-bg-primary">';
-      li += res[i].lang;
-      li += '</span></h5>';
+      li += res[i].fullname+'</strong> ';
+      li += '<span class="badge rounded-pill text-bg-warning">'+res[i].age+'</span> ';
+      li += '<span class="badge rounded-pill text-bg-success">'+res[i].lang+'</span> ';
+      li += '<span class="badge rounded-pill text-bg-primary">'+res[i].reason+'</span> ';
+      li += '<br>'+res[i].church+'<br>';
+      li += '<small class="text-muted">'+res[i].arrive+' to ';
+      li += res[i].depart+'</small>';
+      if (res[i].remark_hk.length > 0) {
+        li += '<br><input class="form-control col-12" type="text" value="'+res[i].remark_hk+'" disabled readonly>';
+      }
+      li += '</p></li>';
   }
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
   html += '<strong>系統記錄</strong>';
-  // html += '<small><span class="badge badge-secondary">';
-  // html += '最後更新: '+res.timestamp;
-  // html += '</span></small>';
   html += li;
   html += '</ul>';
-  // html += progress;
-  html + '</div>';
+  html += '</div>';
+  return html;
+}
+
+function genTodayAttendTable(res) {
+  var html='';
+
+  html += '<div class="container col-11 mt-3"><ul class="list-group">';
+
+  var li = '';
+  var progress = '';
+  for (var i = 0; i<res.length; i++) {
+      li += '<li class="list-group-item d-flex justify-content-between align-items-center">';
+      li += '<p><strong>'+res[i].fullname+'</strong><br>';
+      li += '<small class="text-muted">'+res[i].timestamp+' '+res[i].handledby+'</small></p>';
+      // li += '<p class="text-muted">'+res[i].handledby+'</p>';
+      li += '</li>';
+  }
+  html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
+  html += '<strong>今日訪客</strong>';
+  html += li;
+  html += '</ul>';
+  html += '</div>';
   return html;
 }
 
@@ -411,7 +442,18 @@ function createMainView() {
   var div = createCustomElement('div', 'container col_11');
   content.appendChild(div);
   div.id = 'mainPage';
-  div.innerHTML = '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
+  // div.innerHTML = '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
+
+  var html = '<div class="container col-11 mt-3"><ul class="list-group">';
+  html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
+  html += '<strong>訪客登記</strong>';
+  html += '</li>';
+  html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
+  html += '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
+  html += '</li>';
+  html += '</ul>';
+  html += '</div>';
+  div.innerHTML = html;
 
   var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io");
 }
@@ -429,6 +471,22 @@ function createRecordView() {
   content.appendChild(div);
   div.id = 'sys_rec';
   getSysRec();
+  
+}
+
+function createTodayAttendView() {
+  var userinfo = getUserInfo();
+  initViews();
+  if (userinfo.name == null){
+    setHeaderTitle('h2', 'Invalid User');
+    return;
+  }
+  header.innerHTML = getNavHtml();
+
+  var div = createCustomElement('div', 'container col_11');
+  content.appendChild(div);
+  div.id = 'today_attend';
+  getTodayAttend();
   
 }
 

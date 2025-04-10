@@ -29,11 +29,23 @@ function gasIsReg() {
           vname = data.res.name;
           createQrView(lifeno);
         } else if (data.res.isValid == '1') {
+          createErrorView(lab('10053'));
+        }
+      }else{
+        createErrorView(data.error_msg);
+      }
+      /*
+      if (data.status=='0') {
+        if (data.res.isValid == '2') {
+          vname = data.res.name;
+          createQrView(lifeno);
+        } else if (data.res.isValid == '1') {
           createRegView(data.res);
         }
       }else{
         alert(lab('100010'));
       }
+      */
     }
     off();
   });
