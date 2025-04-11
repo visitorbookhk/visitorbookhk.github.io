@@ -312,9 +312,16 @@ function createQrView(code) {
 
 function createErrorView(err_msg) {
   var contentHTML = '';
-  contentHTML += '<div class="text-center"><img class="mt-3 mb-3" src="../img/error.gif" class="d-block w-70" alt="">';
+  contentHTML += '<div class="text-center"><img class="img-fluid mt-5 mb-5" src="img/error.gif" class="d-block w-70" alt="">';
   contentHTML += '<h3><span class="badge rounded-pill text-bg-danger'+'">'+err_msg+'</span></h3></div>';
   showAlertModal(lab('100053'), contentHTML, '');
+}
+
+function createRegErrorView(err_msg) {
+  var contentHTML = '';
+  contentHTML += '<div class="text-center"><img class="img-fluid mt-5 mb-5" src="../img/error.gif" class="d-block w-70" alt="">';
+  contentHTML += '<h3><span class="badge rounded-pill text-bg-danger'+'">'+err_msg+'</span></h3></div>';
+  showAlertModal('錯誤', contentHTML, '');
 }
 
 function createAccessView(res) {

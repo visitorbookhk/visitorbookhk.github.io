@@ -20,7 +20,7 @@ function checkisReg() {
   vname = '';
   regForm = {};
   lifeno = document.getElementById('iv1_lifeno').value;
-  (lifeno.length > 0) ? gasIsReg() : gasFullForm();
+  (lifeno.length > 0) ? gasIsReg() : showAlertModal(lab('100051'), lab('100006'),'');
 }
 
 function getCSSClassStr(key) {
@@ -94,7 +94,12 @@ function oauth2SignIn() {
 
 function getUserInfo() {
   var data = localStorage.getItem('userinfo');
-  var userinfo = JSON.parse(data);
+  if (data == null) {
+    return null;
+  }else{
+    var userinfo = JSON.parse(data);
+    return userinfo;    
+  }
+  
 
-  return userinfo;
 }

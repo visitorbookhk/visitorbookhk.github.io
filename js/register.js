@@ -8,7 +8,7 @@ function gasAttend(code) {
       if (data.status=='0') {
         createAccessView(data.res);
       }else{
-        alert(data.error_msg);
+        createRegErrorView(data.error_msg);
       }
     }
     off();
@@ -60,7 +60,13 @@ function getTodayAttend() {
 $(document).ready(function() {
   let urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('v')) {
-    gasAttend(urlParams.get('v'));
+    if (getUserInfo() == null) {
+      alert('請先登入');
+      logout();
+    }else{
+      gasAttend(urlParams.get('v'));
+    }
+    
   }
 
   gid = localStorage.getItem('gid');
