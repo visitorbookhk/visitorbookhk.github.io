@@ -29,7 +29,7 @@ function gasIsReg() {
           vname = data.res.name;
           createQrView(lifeno);
         } else if (data.res.isValid == '1') {
-          createErrorView(lab('100054'));
+          createRegView(data.res);
         }
       }else{
         createErrorView(data.error_msg);

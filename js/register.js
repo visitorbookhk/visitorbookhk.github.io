@@ -36,6 +36,27 @@ function getSysRec() {
       });
 }
 
+function getUserRec() {
+  on();
+      var userinfo = getUserInfo();
+      var url = GAS_URL+'?action=getUserRec&id='+userinfo.id;
+
+      $.getJSON(url, function(data) {
+
+        if (data !== null) {
+          if (data.status=='0') {
+            document.getElementById('user_rec').innerHTML = genUserRecTable(data.res);
+          }else{
+            alert(data.error_msg);
+            if (data.error_code == '104') {
+              logout();
+            }
+          }
+        }
+        off();
+      });
+}
+
 function getTodayAttend() {
   on();
       var userinfo = getUserInfo();

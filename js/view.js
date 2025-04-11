@@ -372,6 +372,9 @@ function getNavHtml() {
   html += '          <a class="nav-link" onclick="return createRecordView();">系統記錄</a>';
   html += '        </li>';
   html += '        <li class="nav-item">';
+  html += '          <a class="nav-link" onclick="return createUserRecordView();">e-芳名錄</a>';
+  html += '        </li>';
+  html += '        <li class="nav-item">';
   html += '          <a class="nav-link" onclick="return createTodayAttendView();">今日訪客</a>';
   html += '        </li>';
   html += '      </ul>';
@@ -408,6 +411,33 @@ function genSysRecTable(res) {
   }
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
   html += '<strong>系統記錄</strong>';
+  html += li;
+  html += '</ul>';
+  html += '</div>';
+  return html;
+}
+
+function genUserRecTable(res) {
+  var html='';
+
+  html += '<div class="container col-11 mt-3"><ul class="list-group">';
+
+  var li = '';
+  var progress = '';
+  for (var i = 0; i<res.length; i++) {
+      li += '<li class="list-group-item d-flex justify-content-between align-items-center"><p><strong>';
+      li += res[i].fullname+'</strong> ';
+      li += '<span class="badge rounded-pill text-bg-warning">'+res[i].agegroup+'</span> ';
+      li += '<span class="badge rounded-pill text-bg-primary">'+res[i].reason+'</span> ';
+      li += '<br>'+res[i].church+'<br>';
+      li += '<small class="text-muted">'+res[i].timestamp+'</small>';
+      if (res[i].lifeno.length > 0) {
+        li += '<br><input class="form-control col-12" type="text" value="'+res[i].lifeno+'" disabled readonly>';
+      }
+      li += '</p></li>';
+  }
+  html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
+  html += '<strong>e-芳名錄</strong>';
   html += li;
   html += '</ul>';
   html += '</div>';
@@ -478,6 +508,22 @@ function createRecordView() {
   content.appendChild(div);
   div.id = 'sys_rec';
   getSysRec();
+  
+}
+
+function createUserRecordView() {
+  var userinfo = getUserInfo();
+  initViews();
+  if (userinfo.name == null){
+    setHeaderTitle('h2', 'Invalid User');
+    return;
+  }
+  header.innerHTML = getNavHtml();
+
+  var div = createCustomElement('div', 'container col_11');
+  content.appendChild(div);
+  div.id = 'user_rec';
+  getUserRec();
   
 }
 
