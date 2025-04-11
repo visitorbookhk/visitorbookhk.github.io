@@ -353,7 +353,7 @@ function getNavHtml() {
   html += '      <img src="../img/icon.png" width="30" height="30" alt="">  ';
   html += userinfo.name;
   html += '    </a>';
-  html += '    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
+  html += '    <button class="navbar-toggler btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
   html += '      <span class="navbar-toggler-icon"></span>';
   html += '    </button>';
   html += '    <div class="collapse navbar-collapse" id="navbarSupportedContent">';
