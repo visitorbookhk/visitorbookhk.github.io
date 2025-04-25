@@ -396,7 +396,7 @@ function genSysRecTable(res) {
   var li = '';
   var progress = '';
   for (var i = 0; i<res.length; i++) {
-      li += '<li class="list-group-item d-flex justify-content-between align-items-center"><p><strong>';
+      li += '<li class="list-group-item"><p><strong>';
       li += res[i].fullname+'</strong> ';
       li += '<span class="badge rounded-pill text-bg-warning">'+res[i].age+'</span> ';
       li += '<span class="badge rounded-pill text-bg-success">'+res[i].lang+'</span> ';
@@ -405,7 +405,7 @@ function genSysRecTable(res) {
       li += '<small class="text-muted">'+res[i].arrive+' to ';
       li += res[i].depart+'</small>';
       if (res[i].remark_hk.length > 0) {
-        li += '<br><input class="form-control col-12" type="text" value="'+res[i].remark_hk+'" disabled readonly>';
+        li += '<br><textarea class="form-control" disabled readonly>'+res[i].remark_hk+'</textarea>';
       }
       li += '</p></li>';
   }
