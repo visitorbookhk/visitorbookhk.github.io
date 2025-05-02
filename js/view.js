@@ -405,7 +405,7 @@ function genSysRecTable(res) {
       li += '<small class="text-muted">'+res[i].arrive+' to ';
       li += res[i].depart+'</small>';
       if (res[i].remark_hk.length > 0) {
-        li += '<br><textarea class="form-control" style="overflow:hidden" disabled readonly>'+res[i].remark_hk+'</textarea>';
+        li += '<br><textarea class="form-control" style="height:100%" disabled readonly>'+res[i].remark_hk+'</textarea>';
         
       }
       li += '</p></li>';
