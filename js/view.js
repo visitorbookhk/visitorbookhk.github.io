@@ -405,7 +405,11 @@ function genSysRecTable(res) {
       li += '<small class="text-muted">'+res[i].arrive+' to ';
       li += res[i].depart+'</small>';
       if (res[i].remark_hk.length > 0) {
-        li += '<br><textarea class="form-control" disabled readonly>'+res[i].remark_hk+'</textarea>';
+        li += '<br><textarea class="form-control" id="txtarea_'+i+'" disabled readonly>'+res[i].remark_hk+'</textarea>';
+        var txta = document.getElementById("txtarea_"+i);
+        txta.style.overflow = "hidden";
+        txta.style.height = 0;
+        txta.style.height = txta.scrollHeight + "px";
       }
       li += '</p></li>';
   }
