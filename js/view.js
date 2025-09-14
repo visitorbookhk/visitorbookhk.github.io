@@ -312,7 +312,7 @@ function createQrView(code) {
 
   showAlertModal(lab('100008'), html,'');
 
-  var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io/register?v="+window.btoa(unescape(encodeURIComponent(code))));
+  var qrcode = new QRCode("qrcode",window.btoa(unescape(encodeURIComponent(code))));
 }
 
 function createErrorView(err_msg) {
