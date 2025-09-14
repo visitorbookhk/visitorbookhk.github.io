@@ -58,9 +58,10 @@ function showConfirmModal(title, body, footer) {
 
 function showScanModal() {
   scanModal.hide();
-  document.getElementById('confirmModalTitle').innerHTML = 'scan';
-  document.getElementById('confirmModalBody').innerHTML = 'scan';
-  document.getElementById('confirmModalFooter').innerHTML = 'scan';
+  document.getElementById('scanModalTitle').innerHTML = 'scan';
+  document.getElementById('scanModalBody').innerHTML = 'scan';
+  document.getElementById('scanModalFooter').innerHTML = 'scan';
+  html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
   scanModal.show();
 }
 
