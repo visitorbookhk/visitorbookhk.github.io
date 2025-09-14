@@ -56,6 +56,14 @@ function showConfirmModal(title, body, footer) {
   confirmModal.show();
 }
 
+function showScanModal() {
+  scanModal.hide();
+  document.getElementById('confirmModalTitle').innerHTML = 'scan';
+  document.getElementById('confirmModalBody').innerHTML = 'scan';
+  document.getElementById('confirmModalFooter').innerHTML = 'scan';
+  scanModal.show();
+}
+
 function createFormInputSelect(_key, _options, _values, multi_input, _mandatory) {
 
   var input_id = _key;
@@ -332,6 +340,10 @@ function createAccessView(res) {
   showAlertModal('成功', contentHTML, '');
 }
 
+function createScanView() {
+  showScanModal();
+}
+
 function createInputView1() {
   var html = '';
   html += '      <div id="inputView1" class="text-center">';
@@ -491,6 +503,7 @@ function createMainView() {
   html += '</li>';
   html += '</ul>';
   html += '</div>';
+  html += '<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-primary d-flex col flex-column align-items-center mt-5 mb-5" onclick="createScanView()">Scan</button></div>';
   div.innerHTML = html;
 
   var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io");
