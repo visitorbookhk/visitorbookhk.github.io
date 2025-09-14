@@ -12,9 +12,11 @@ const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal')
 const scanModal = new bootstrap.Modal(document.getElementById('scanModal'), {backdrop: 'static', keyboard: false});
 
 // for qr code scanner
+
+const html5QrCode = new Html5Qrcode(/* element id */ "reader");
 const qrCodeSuccessCallback = (decodedText, decodedResult) => {
     /* handle success */
   html5QrCode.stop();
   alert('decodedText: '+decodedText);
 };
-const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+const html5QrCodeConfig = { fps: 10, qrbox: { width: 250, height: 250 } };

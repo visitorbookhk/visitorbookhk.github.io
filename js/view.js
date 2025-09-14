@@ -61,7 +61,7 @@ function showScanModal() {
   document.getElementById('scanModalTitle').innerHTML = 'scan';
   document.getElementById('scanModalBody').innerHTML = 'scan';
   document.getElementById('scanModalFooter').innerHTML = 'scan';
-  html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+  html5QrCode.start({ facingMode: "environment" }, html5QrCodeConfig, qrCodeSuccessCallback);
   scanModal.show();
 }
 
