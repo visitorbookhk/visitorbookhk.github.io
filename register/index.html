@@ -88,14 +88,50 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="scanModalTitle"></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" id="scanModalBody">
-            <div id="reader" width="600px"></div>
+<div id="qr-reader"></div>
+<div id="qr-reader-results"></div>
+            <script>
+              // This method will trigger user permissions
+              Html5Qrcode.getCameras().then(devices => {
+                /**
+                 * devices would be an array of objects of type:
+                 * { id: "id", label: "label" }
+                 */
+                if (devices && devices.length) {
+                  var cameraId = devices[0].id;
+                  // .. use this to start scanning.
+                  const html5QrCode = new Html5Qrcode(/* element id */ "reader");
+                  html5QrCode.start(
+                    cameraId, 
+                    {
+                      fps: 10,    // Optional, frame per seconds for qr code scanning
+                      qrbox: { width: 250, height: 250 }  // Optional, if you want bounded box UI
+                    },
+                    (decodedText, decodedResult) => {
+                      // do something when code is read
+                      scanModal.hide();
+                      alert(decodedText);
+                    },
+                    (errorMessage) => {
+                      // parse error, ignore it.
+                    })
+                  .catch((err) => {
+                    // Start failed, handle it.
+                  });
+                }
+              }).catch(err => {
+                // handle err
+              });
+
+            </script>
           </div>
-          <div class="modal-footer" id="scanModalFooter">
+          <!-- <div class="modal-footer" id="scanModalFooter"> -->
 <!--             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary">Understood</button> -->
-          </div>
+          <!-- </div> -->
         </div>
       </div>
     </div>

@@ -10,13 +10,3 @@ const alertModal = new bootstrap.Modal(document.getElementById('alertModal'), {b
 const inputModal = new bootstrap.Modal(document.getElementById('inputModal'), {backdrop: 'static', keyboard: false});
 const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'), {backdrop: 'static', keyboard: false});
 const scanModal = new bootstrap.Modal(document.getElementById('scanModal'), {backdrop: 'static', keyboard: false});
-
-// for qr code scanner
-
-const html5QrCode = new Html5Qrcode(/* element id */ "reader");
-const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-    /* handle success */
-  html5QrCode.stop();
-  alert('decodedText: '+decodedText);
-};
-const html5QrCodeConfig = { fps: 10, qrbox: { width: 250, height: 250 } };
