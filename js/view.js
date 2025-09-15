@@ -61,7 +61,7 @@ function showScanModal() {
   scanModal.show();
   setTimeout(function () {
     if (html5QrcodeScanner.getState() == Html5QrcodeScannerState.PAUSED) html5QrcodeScanner.resume();
-  }, 2000);
+  }, 1000);
   
 }
 
