@@ -79,17 +79,6 @@ function getTodayAttend() {
 }
 
 $(document).ready(function() {
-  let urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has('v')) {
-    if (getUserInfo() == null) {
-      alert('請先登入');
-      logout();
-    }else{
-      gasAttend(urlParams.get('v'));
-    }
-    
-  }
-
   gid = localStorage.getItem('gid');
   // login
   var access_token = '';
