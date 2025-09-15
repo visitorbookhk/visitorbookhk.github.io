@@ -12,10 +12,6 @@ function gasAttend(code) {
       }
     }
     off();
-    setTimeout(function () {
-      alertModal.hide();
-      showScanModal();
-    }, 4000);
   });
 }
 
