@@ -91,15 +91,13 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" id="scanModalBody">
-            <div id="reader" style="display: inline-block; position: center; padding: 0px;"></div>
+            <div id="reader"></div>
             <div id="scan_res"></div>
             <script>
               function onScanSuccess(decodedText, decodedResult) {
                 // handle the scanned code as you like, for example:
                 html5QrcodeScanner.pause();
-                console.log(`Code matched = ${decodedText}`, decodedResult);
-                document.getElementById('scan_res').innerHTML=decodedText;
-                // gasAttend(decodedText);
+                gasAttend(decodedText);
               }
               function onScanFailure(error) {
                 // handle scan failure, usually better to ignore and keep scanning.
