@@ -57,6 +57,7 @@ function showConfirmModal(title, body, footer) {
 }
 
 function showScanModal() {
+  scanModal.hide();
   if (html5QrcodeScanner.getState() == Html5QrcodeScannerState.PAUSED) html5QrcodeScanner.resume();
   scanModal.show();
 }
