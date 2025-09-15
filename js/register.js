@@ -12,6 +12,9 @@ function gasAttend(code) {
       }
     }
     off();
+    setTimeout(function () {
+      alertModal.hide();
+    }, 3000);
   });
 }
 
