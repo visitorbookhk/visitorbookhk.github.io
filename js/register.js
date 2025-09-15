@@ -1,5 +1,5 @@
 function gasAttend(code) {
-  // on();
+  on();
   var userinfo = getUserInfo();
   var content = code;
   var url = GAS_URL+'?action=addAttend&content='+content+'&id='+userinfo.id;
@@ -11,7 +11,7 @@ function gasAttend(code) {
         createRegErrorView(data.error_msg);
       }
     }
-    // off();
+    off();
   });
 }
 
