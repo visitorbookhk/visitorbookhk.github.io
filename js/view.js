@@ -491,32 +491,19 @@ function createMainView() {
   div.id = 'mainPage';
   // div.innerHTML = '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
 
-  const script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = '../js/html5qrcode.js';
-
   var html = '<div class="container col-11 mt-3"><ul class="list-group">';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
   html += '<strong>訪客登記</strong>';
   html += '</li>';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
-  // html += '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
-  html += '<div class="d-flex col flex-column align-items-center mt-5 mb-5">';
-  html += '<div id="reader"></div>';
-  html += '</div>';
+  html += '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
   html += '</li>';
   html += '</ul>';
   html += '</div>';
-  html += '<div id="scan_res" class="d-flex col flex-column align-items-center mt-2">result</div>';
   html += '<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-primary d-flex col flex-column align-items-center mt-5 mb-5" onclick="createScanView()">Scan</button></div>';
   div.innerHTML = html;
 
-
-  div.appendChild(script); 
-
-
-
-  // var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io");
+  var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io");
 }
 
 function createRecordView() {

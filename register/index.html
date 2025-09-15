@@ -91,6 +91,31 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" id="scanModalBody">
+            <div id="reader" style="display: inline-block; position: center; padding: 0px;"></div>
+            <div id="scan_res"></div>
+            <script>
+              function onScanSuccess(decodedText, decodedResult) {
+                // handle the scanned code as you like, for example:
+                html5QrcodeScanner.pause();
+                console.log(`Code matched = ${decodedText}`, decodedResult);
+                document.getElementById('scan_res').innerHTML=decodedText;
+                // gasAttend(decodedText);
+              }
+              function onScanFailure(error) {
+                // handle scan failure, usually better to ignore and keep scanning.
+                // for example:
+                console.warn(`Code scan error = ${error}`);
+              }
+              let html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader",
+                { fps: 10, qrbox: {width: 250, height: 250} },
+                /* verbose= */ false);
+              // html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+                setTimeout(function () {
+                  html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+                }, 2000);
+
+            </script>
           </div>
           <!-- <div class="modal-footer" id="scanModalFooter"> -->
 <!--             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
