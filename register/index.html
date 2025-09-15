@@ -110,10 +110,7 @@
                 "reader",
                 { fps: 10, qrbox: {width: 250, height: 250} },
                 /* verbose= */ false);
-              // html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-                setTimeout(function () {
-                  html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-                }, 2000);
+              html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
             </script>
           </div>
