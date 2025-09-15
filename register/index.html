@@ -92,13 +92,14 @@
           </div>
           <div class="modal-body" id="scanModalBody">
             <div id="reader"></div>
+            <div id="scan_res"></div>
             <script>
               function onScanSuccess(decodedText, decodedResult) {
                 // handle the scanned code as you like, for example:
                 html5QrcodeScanner.clear();
                 scanModal.hide();
                 console.log(`Code matched = ${decodedText}`, decodedResult);
-                alert(decodedText);
+                document.getElementById('scan_res').innerHTML=decodedText;
                 // gasAttend(decodedText);
               }
 
