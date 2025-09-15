@@ -58,8 +58,11 @@ function showConfirmModal(title, body, footer) {
 
 function showScanModal() {
   scanModal.hide();
-  if (html5QrcodeScanner.getState() == Html5QrcodeScannerState.PAUSED) html5QrcodeScanner.resume();
   scanModal.show();
+  setTimeout(function () {
+    if (html5QrcodeScanner.getState() == Html5QrcodeScannerState.PAUSED) html5QrcodeScanner.resume();
+  }, 2000);
+  
 }
 
 function createFormInputSelect(_key, _options, _values, multi_input, _mandatory) {

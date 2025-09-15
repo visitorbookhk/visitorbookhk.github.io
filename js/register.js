@@ -12,7 +12,6 @@ function gasAttend(code) {
       }
     }
     off();
-    if (html5QrcodeScanner.getState() == Html5QrcodeScannerState.PAUSED) html5QrcodeScanner.resume();
   });
 }
 
