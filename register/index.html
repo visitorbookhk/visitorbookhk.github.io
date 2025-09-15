@@ -98,7 +98,8 @@
                 html5QrcodeScanner.clear();
                 scanModal.hide();
                 console.log(`Code matched = ${decodedText}`, decodedResult);
-                gasAttend(decodedText);
+                alert(decodedText);
+                // gasAttend(decodedText);
               }
 
               function onScanFailure(error) {
