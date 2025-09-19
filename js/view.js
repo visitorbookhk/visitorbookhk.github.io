@@ -232,8 +232,6 @@ function createRegView(res) {
 
   var form = res.regForm;
 
-  console.log(JSON.stringify(res,0,2));
-
   for (var i=0; i < form.length; i++) {
     regForm[form[i].key] = {};
     regForm[form[i].key].label = lab(form[i].label);
