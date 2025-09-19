@@ -140,6 +140,11 @@ function createFormInputText(_key, _label, _placeholder, _mandatory) {
     input.setAttribute('required','true');
   }
 
+  if (_key == "lifeno" && lifeno) {
+    input.setAttribute('value', lifeno);
+    input.setAttribute('disabled','true');
+  }
+
   temp.appendChild(div);
   return temp.innerHTML;
 }
@@ -152,11 +157,7 @@ function createFormInputDate(_key, _label, _mandatory) {
 
   var input = createCustomElement('input', 'form-control');
   temp.appendChild(input);
-  input.id = input_id;
   input.setAttribute('style','display:none');
-  if (_mandatory) {
-    input.setAttribute('required','true');
-  }
 
   var div = createCustomElement('div', 'input-group mb-3');
 
@@ -165,41 +166,12 @@ function createFormInputDate(_key, _label, _mandatory) {
   span.innerHTML = _label;
   span.id = 'label_'+input_id;
 
-  var inputy = createCustomElement('input', 'form-control');
-  div.appendChild(inputy);
-  inputy.id=input_id+'_y';
-  inputy.setAttribute('type', 'text');
-  inputy.setAttribute('placeholder', lab('100016'));
-  inputy.setAttribute('aria-label', lab('100016'));
-  inputy.setAttribute('aria-describedby', input_id+'_y');
-  inputy.setAttribute('onchange', 'return dateOnchange("'+input_id+'")');
-
-  var inputm = createCustomElement('input', 'form-control');
-  div.appendChild(inputm);
-  inputm.id=input_id+'_m';
-  inputm.setAttribute('type', 'text');
-  inputm.setAttribute('placeholder', lab('100017'));
-  inputm.setAttribute('aria-label', lab('100017'));
-  inputm.setAttribute('aria-describedby', input_id+'_m');
-  inputm.setAttribute('onchange', 'return dateOnchange("'+input_id+'")');
-
-  var inputd = createCustomElement('input', 'form-control');
-  div.appendChild(inputd);
-  inputd.id=input_id+'_d';
-  inputd.setAttribute('type', 'text');
-  inputd.setAttribute('placeholder', lab('100018'));
-  inputd.setAttribute('aria-label', lab('100018'));
-  inputd.setAttribute('aria-describedby', input_id+'_d');
-  inputd.setAttribute('onchange', 'return dateOnchange("'+input_id+'")');
-
+  var inputdp = createCustomElement('input', 'form-control');
+  div.appendChild(inputdp);
+  inputdp.id = input_id;
+  inputdp.setAttribute('type', 'date');
   if (_mandatory) {
-    var today = new Date();
-    inputy.setAttribute('value', today.getFullYear());
-    inputm.setAttribute('value', today.getMonth()+1);
-    inputd.setAttribute('value', today.getDate());
-    var str = inputy.value+'-'+inputm.value+'-'+inputd.value;
-    var date = new Date (str);
-    input.setAttribute('value', (date=='Invalid Date') ? 'Invalid Date' : str);
+    inputdp.setAttribute('required','true');
   }
 
   temp.appendChild(div);
@@ -214,21 +186,6 @@ function reasonOnchange() {
   }else{
     input.setAttribute('disabled', 'disabled'); 
     input.value='';
-  }
-}
-
-function dateOnchange(id) {
-  var input = document.getElementById(id);
-  var inputy = document.getElementById(id+'_y');
-  var inputm = document.getElementById(id+'_m');
-  var inputd = document.getElementById(id+'_d');
-  var str = inputy.value+'-'+inputm.value+'-'+inputd.value;
-  var date = new Date (str);
-  // date.setFullYear(inputy.value, inputm.value+1, inputd.value);
-  if (inputy.value=='' && inputm.value=='' && inputd.value=='') {
-    input.setAttribute('value', '');
-  } else{
-    input.setAttribute('value', (date=='Invalid Date' || inputy.value=='' || inputm.value=='' || inputd.value=='') ? 'Invalid Date' : str);
   }
 }
 
@@ -254,18 +211,11 @@ function createConfrimRegView() {
       regForm[i].value = document.getElementById(i).value;
     }
 
-    if (regForm[i].value == 'Invalid Date') {
-      alert(regForm[i].label+': '+lab('100051'));
-      backRegForm();
-      return;
-    }
     if (regForm[i].value == '' && (document.getElementById(i).required)) {
       alert(regForm[i].label+': '+lab('100044'));
       backRegForm();
       return;
     }
-    
-    regForm['lifeno'] = {'value': lifeno};
 
     body += '<span><strong>'+regForm[i].label+':</strong> <p class="text-primary">'+regForm[i].value+'</p></span>';
   }
@@ -281,6 +231,8 @@ function createRegView(res) {
   var body = '<div class="alert alert-primary" role="alert">'+lab('100044')+'</div>';
 
   var form = res.regForm;
+
+  console.log(JSON.stringify(res,0,2));
 
   for (var i=0; i < form.length; i++) {
     regForm[form[i].key] = {};
