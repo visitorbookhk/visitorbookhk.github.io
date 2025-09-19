@@ -199,6 +199,11 @@ function submitRegForm() {
   gasSubmitReg();
 }
 
+function submitRegForm_int() {
+  confirmModal.hide();
+  gasSubmitReg_int();
+}
+
 function createConfrimRegView() {
 
   var body = '';
@@ -224,6 +229,28 @@ function createConfrimRegView() {
   var footer = '<button type="button" class="btn btn-secondary" onclick="return backRegForm();">'+lab('100005')+'</button>';
   footer += '<button type="button" class="btn btn-danger" onclick="return submitRegForm();">'+lab('100050')+'</button>';
   showConfirmModal(lab('100049'),body,footer);
+}
+
+function createConfrimRegView_int() {
+
+  var body = '';
+
+  for (var i in regForm) {
+    
+    regForm[i].value = document.getElementById(i).value;
+
+    if (regForm[i].value == '' && (document.getElementById(i).required)) {
+      alert(regForm[i].label+': *必須填寫');
+      backRegForm();
+      return;
+    }
+
+    body += '<span><strong>'+regForm[i].label+':</strong> <p class="text-primary">'+regForm[i].value+'</p></span>';
+  }
+
+  var footer = '<button type="button" class="btn btn-secondary" onclick="return backRegForm();">返回</button>';
+  footer += '<button type="button" class="btn btn-danger" onclick="return submitRegForm_int();">提交</button>';
+  showConfirmModal('確認',body,footer);
 }
 
 function createRegView(res) {
@@ -255,6 +282,41 @@ function createRegView(res) {
   showInputModal(lab('100001'),body,footer);
 
 
+}
+
+function createRegView_int(res) {
+  regForm = {};
+  var body = '';
+
+  var form = res;
+
+  for (var i=0; i < form.length; i++) {
+    regForm[form[i].key] = {};
+    regForm[form[i].key].label = form[i].label;
+    var mandatoryMark = '';
+    if (form[i].mandatory==true) {
+      mandatoryMark = '*';
+    }
+    if (form[i].type=='date') {
+      body += createFormInputDate(form[i].key, mandatoryMark+form[i].label, form[i].mandatory);
+    }
+    if (form[i].type=='text') {
+      body += createFormInputText(form[i].key, mandatoryMark+form[i].label, '', form[i].mandatory);
+    }
+    if (form[i].type=='select') {
+      body += createFormInputSelect(form[i].key, mandatoryMark+form[i].label, form[i].values, form[i]['multi-input']? form[i]['multi-input'] : [], form[i].mandatory);
+    }
+  }
+
+  var footer = '<button type="button" class="btn btn-primary" onclick="return createConfrimRegView_int();">保存</button>';
+
+  showInputModal('新增訪客',body,footer);
+
+
+}
+
+function createAddAttendView(ind) {
+  showInputModal(sysRec[ind].fullname,'預備中','');
 }
 
 function createQrView(code) {
@@ -329,10 +391,10 @@ function getNavHtml() {
   html += '    <div class="collapse navbar-collapse" id="navbarSupportedContent">';
   html += '      <ul class="navbar-nav me-auto mb-2 mb-lg-0">';
   html += '        <li class="nav-item">';
-  html += '          <a class="nav-link" onclick="return createMainView();">訪客登記</a>';
+  html += '          <a class="nav-link" onclick="return createMainView();">登記</a>';
   html += '        </li>';
   html += '        <li class="nav-item">';
-  html += '          <a class="nav-link" onclick="return createRecordView();">系統記錄</a>';
+  html += '          <a class="nav-link" onclick="return createRecordView();">訪客名單</a>';
   html += '        </li>';
   html += '        <li class="nav-item">';
   html += '          <a class="nav-link" onclick="return createUserRecordView();">e-芳名錄</a>';
@@ -358,9 +420,10 @@ function genSysRecTable(res) {
 
   var li = '';
   var progress = '';
+  sysRec = res;
   for (var i = 0; i<res.length; i++) {
-      li += '<li class="list-group-item"><p><strong>';
-      li += res[i].fullname+'</strong> ';
+      li += '<li class="list-group-item"><p>';
+      li += '<button type="button" class="btn btn-light btn-lg w-100 col-12" onclick="return createAddAttendView('+i+')"><strong>'+res[i].fullname+'</strong></button><br>';
       li += '<span class="badge rounded-pill text-bg-warning">'+res[i].age+'</span> ';
       li += '<span class="badge rounded-pill text-bg-success">'+res[i].lang+'</span> ';
       li += '<span class="badge rounded-pill text-bg-primary">'+res[i].reason+'</span> ';
@@ -374,7 +437,7 @@ function genSysRecTable(res) {
       li += '</p></li>';
   }
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
-  html += '<strong>系統記錄</strong>';
+  html += '<strong>系統記錄</strong><button type="button" class="btn btn-light" onclick="gasRegForm_int()">New</button>';
   html += li;
   html += '</ul>';
   html += '</div>';
@@ -447,14 +510,14 @@ function createMainView() {
 
   var html = '<div class="container col-11 mt-3"><ul class="list-group">';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
-  html += '<strong>訪客登記</strong>';
+  html += '<strong>訪客登記</strong><button type="button" class="btn btn-light" onclick="gasRegForm_int()">New</button></div>';
   html += '</li>';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
   html += '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
   html += '</li>';
   html += '</ul>';
   html += '</div>';
-  html += '<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-primary d-flex col flex-column align-items-center mt-5 mb-5" onclick="createScanView()">Scan</button></div>';
+  html += '<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-primary d-flex col flex-column align-items-center mt-5 mb-2" onclick="createScanView()">Scan</button></div>';
   div.innerHTML = html;
 
   var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io");

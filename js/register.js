@@ -15,6 +15,40 @@ function gasAttend(code) {
   });
 }
 
+function gasRegForm_int() {
+  on();
+  var userinfo = getUserInfo();
+  var url = GAS_URL+'?action=getRegForm_int&id='+userinfo.id;
+  $.getJSON(url, function(data) {
+    if (data !== null) {
+      if (data.status=='0') {
+        createRegView_int(data.res);
+      }else{
+        createRegErrorView(data.error_msg);
+      }
+    }
+    off();
+  });
+}
+
+function gasSubmitReg_int() {
+  on();
+  var userinfo = getUserInfo();
+  var content = window.btoa(unescape(encodeURIComponent(JSON.stringify(regForm))));
+  var url = GAS_URL+'?action=regVisit_int&content='+content+'&id='+userinfo.id;
+  $.getJSON(url, function(data) {
+    if (data !== null) {
+      if (data.status=='0') {
+        createRecordView();
+        alert('已新增');
+      }else{
+        createRegErrorView(data.error_msg);
+      }
+    }
+    off();
+  });
+}
+
 function getSysRec() {
   on();
       var userinfo = getUserInfo();
