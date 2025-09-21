@@ -250,7 +250,7 @@ function createConfrimRegView_int() {
 
   var footer = '<button type="button" class="btn btn-secondary" onclick="return backRegForm();">返回</button>';
   footer += '<button type="button" class="btn btn-danger" onclick="return submitRegForm_int();">提交</button>';
-  showConfirmModal('確認',body,footer);
+  showConfirmModal('確定',body,footer);
 }
 
 function createRegView(res) {
@@ -316,7 +316,12 @@ function createRegView_int(res) {
 }
 
 function createAddAttendView(ind) {
-  showInputModal(sysRec[ind].fullname,'預備中','');
+  var body = '';
+  s_code = sysRec[ind].code;
+  body += '<span><strong>姓名:</strong> <p class="text-primary">'+sysRec[ind].fullname+'</p></span>';
+  body += '<span><strong>出席時間:</strong> <p class="text-primary">'+new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: true })+'</p></span>';
+  var footer = '<button type="button" class="btn btn-danger" onclick="return gasAttend(s_code);">確定</button>';
+  showInputModal('記錄出席',body,footer);
 }
 
 function createQrView(code) {

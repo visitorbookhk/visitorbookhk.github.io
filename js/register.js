@@ -1,7 +1,8 @@
 function gasAttend(code) {
-  on();
-  var userinfo = getUserInfo();
   var content = code;
+  on();
+  inputModal.hide();
+  var userinfo = getUserInfo();
   var url = GAS_URL+'?action=addAttend&content='+content+'&id='+userinfo.id;
   $.getJSON(url, function(data) {
     if (data !== null) {

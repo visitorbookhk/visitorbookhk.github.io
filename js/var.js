@@ -21,3 +21,4 @@ var header = document.getElementById('container_header');
 var content = document.getElementById('container_content');
 var footer = document.getElementById('container_footer');
 var sysRec = {};
+var s_code = '';
