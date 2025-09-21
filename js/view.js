@@ -399,10 +399,10 @@ function getNavHtml() {
   html += '          <a class="nav-link" onclick="return createMainView();">主頁</a>';
   html += '        </li>';
   html += '        <li class="nav-item">';
-  html += '          <a class="nav-link" onclick="return createRecordView();">內部名單</a>';
+  html += '          <a class="nav-link" onclick="return createRecordView();">名單(內部)</a>';
   html += '        </li>';
   html += '        <li class="nav-item">';
-  html += '          <a class="nav-link" onclick="return createUserRecordView();">外部名單</a>';
+  html += '          <a class="nav-link" onclick="return createUserRecordView();">名單(外部)</a>';
   html += '        </li>';
   html += '        <li class="nav-item">';
   html += '          <a class="nav-link" onclick="return createTodayAttendView();">今日禮拜出席記錄</a>';
@@ -442,7 +442,7 @@ function genSysRecTable(res) {
       li += '</p></li>';
   }
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
-  html += '<strong>內部名單</strong><button type="button" class="btn btn-light" onclick="gasRegForm_int()">New</button>';
+  html += '<strong>名單(內部)</strong><button type="button" class="btn btn-light" onclick="gasRegForm_int()">New</button>';
   html += li;
   html += '</ul>';
   html += '</div>';
@@ -469,7 +469,7 @@ function genUserRecTable(res) {
       li += '</p></li>';
   }
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
-  html += '<strong>外部名單</strong>';
+  html += '<strong>名單(外部)</strong>';
   html += li;
   html += '</ul>';
   html += '</div>';
