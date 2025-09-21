@@ -27,7 +27,7 @@ function gasIsReg() {
       if (data.status=='0') {
         if (data.res.isValid == '2') {
           vname = data.res.name;
-          createQrView(lifeno);
+          createQrView(data.res.token);
         } else if (data.res.isValid == '1') {
           createRegView(data.res);
         }

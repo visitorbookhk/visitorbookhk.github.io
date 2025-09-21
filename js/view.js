@@ -430,8 +430,8 @@ function genSysRecTable(res) {
       li += '<br>'+res[i].church+'<br>';
       li += '<small class="text-muted">'+res[i].arrive+' to ';
       li += res[i].depart+'</small>';
-      if (res[i].remark_hk.length > 0) {
-        li += '<br><textarea class="form-control" style="field-sizing: content;" disabled readonly>'+res[i].remark_hk+'</textarea>';
+      if (res[i].remark.length > 0) {
+        li += '<br><textarea class="form-control" style="field-sizing: content;" disabled readonly>'+res[i].remark+'</textarea>';
         
       }
       li += '</p></li>';
