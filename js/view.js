@@ -396,16 +396,16 @@ function getNavHtml() {
   html += '    <div class="collapse navbar-collapse" id="navbarSupportedContent">';
   html += '      <ul class="navbar-nav me-auto mb-2 mb-lg-0">';
   html += '        <li class="nav-item">';
-  html += '          <a class="nav-link" onclick="return createMainView();">登記</a>';
+  html += '          <a class="nav-link" onclick="return createMainView();">主頁</a>';
   html += '        </li>';
   html += '        <li class="nav-item">';
-  html += '          <a class="nav-link" onclick="return createRecordView();">訪客名單</a>';
+  html += '          <a class="nav-link" onclick="return createRecordView();">內部名單</a>';
   html += '        </li>';
   html += '        <li class="nav-item">';
-  html += '          <a class="nav-link" onclick="return createUserRecordView();">e-芳名錄</a>';
+  html += '          <a class="nav-link" onclick="return createUserRecordView();">外部名單</a>';
   html += '        </li>';
   html += '        <li class="nav-item">';
-  html += '          <a class="nav-link" onclick="return createTodayAttendView();">今日訪客</a>';
+  html += '          <a class="nav-link" onclick="return createTodayAttendView();">今日禮拜出席記錄</a>';
   html += '        </li>';
   html += '      </ul>';
 
@@ -442,7 +442,7 @@ function genSysRecTable(res) {
       li += '</p></li>';
   }
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
-  html += '<strong>系統記錄</strong><button type="button" class="btn btn-light" onclick="gasRegForm_int()">New</button>';
+  html += '<strong>內部名單</strong><button type="button" class="btn btn-light" onclick="gasRegForm_int()">New</button>';
   html += li;
   html += '</ul>';
   html += '</div>';
@@ -469,7 +469,7 @@ function genUserRecTable(res) {
       li += '</p></li>';
   }
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
-  html += '<strong>e-芳名錄</strong>';
+  html += '<strong>外部名單</strong>';
   html += li;
   html += '</ul>';
   html += '</div>';
@@ -491,7 +491,7 @@ function genTodayAttendTable(res) {
       li += '</li>';
   }
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
-  html += '<strong>今日訪客</strong>';
+  html += '<strong>今日禮拜出席記錄</strong>';
   html += li;
   html += '</ul>';
   html += '</div>';
@@ -515,7 +515,7 @@ function createMainView() {
 
   var html = '<div class="container col-11 mt-3"><ul class="list-group">';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
-  html += '<strong>訪客登記</strong><button type="button" class="btn btn-light" onclick="gasRegForm_int()">New</button></div>';
+  html += '<strong>主頁</strong><button type="button" class="btn btn-light" onclick="gasRegForm_int()">New</button></div>';
   html += '</li>';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
   html += '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
