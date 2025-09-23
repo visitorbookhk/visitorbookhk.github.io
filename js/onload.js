@@ -27,7 +27,6 @@ function gasIsReg() {
       if (data.status=='0') {
         if (data.res.isValid == '2') {
           vname = data.res.name;
-          console.log(JSON.stringify(data,0,2));
           createQrView(data.res.code);
         } else if (data.res.isValid == '1') {
           createRegView(data.res);
