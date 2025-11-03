@@ -405,7 +405,7 @@ function getNavHtml() {
   html += '          <a class="nav-link" onclick="return createUserRecordView();">名單(外部)</a>';
   html += '        </li>';
   html += '        <li class="nav-item">';
-  html += '          <a class="nav-link" onclick="return createTodayAttendView();">今日禮拜出席記錄</a>';
+  html += '          <a class="nav-link" onclick="return createTodayAttendView();">禮拜出席</a>';
   html += '        </li>';
   html += '      </ul>';
 
@@ -491,7 +491,7 @@ function genTodayAttendTable(res) {
       li += '</li>';
   }
   html += '<li class="list-group-item d-flex justify-content-between align-items-center active">';
-  html += '<strong>今日禮拜出席記錄</strong>';
+  html += '<strong>禮拜出席</strong>';
   html += li;
   html += '</ul>';
   html += '</div>';
