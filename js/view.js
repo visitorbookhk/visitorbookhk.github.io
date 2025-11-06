@@ -486,7 +486,7 @@ function genTodayAttendTable(res) {
   for (var i = 0; i<res.length; i++) {
       li += '<li class="list-group-item d-flex justify-content-between align-items-center">';
       li += '<p><strong>'+res[i].fullname+'</strong><br>';
-      li += '<small class="text-muted">'+res[i].timestamp+' - '+res[i].handledby+'</small></p>';
+      li += '<small class="text-muted">'+res[i].timestamp+' '+res[i].handledby+'</small></p>';
       // li += '<p class="text-muted">'+res[i].handledby+'</p>';
       li += '</li>';
   }
