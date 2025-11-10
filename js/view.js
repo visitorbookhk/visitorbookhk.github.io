@@ -484,7 +484,7 @@ function genTodayAttendTable(res) {
   var li = '';
   var progress = '';
   for (var i = 0; i<res.length; i++) {
-    var completed = res[i].completed ? ' <i class="fa fa-check-circle"></i>' : '';
+    var completed = res[i].completed ? ' <i class="fa fa-check-circle" style="color:#0dcaf0;"></i>' : '';
       li += '<li class="list-group-item d-flex justify-content-between align-items-center">';
       li += '<p><strong>'+res[i].fullname+'</strong>'+completed+'<br>';
       li += '<small class="text-muted">'+res[i].timestamp+' '+res[i].handledby+'</small></p>';
