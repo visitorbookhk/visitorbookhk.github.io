@@ -483,9 +483,11 @@ function genTodayAttendTable(res) {
 
   var li = '';
   var progress = '';
+  var today = new Date();
   for (var i = 0; i<res.length; i++) {
     var completed = res[i].completed ? ' <i class="fa fa-check-circle" style="color:#0dcaf0;"></i>' : '';
-      li += '<li class="list-group-item d-flex justify-content-between align-items-center">';
+    var isToday = res[i].timestamp.split('/')[0].split(' ')[1]==today.getDate();
+      li += '<li class="list-group-item d-flex justify-content-between align-items-center'+(isToday?'':' bg-light')+'">';
       li += '<p><strong>'+res[i].fullname+'</strong>'+completed+'<br>';
       li += '<small class="text-muted">'+res[i].timestamp+' '+res[i].handledby+'</small></p>';
       // li += '<p class="text-muted">'+res[i].handledby+'</p>';
