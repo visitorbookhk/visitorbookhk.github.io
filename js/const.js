@@ -1,4 +1,4 @@
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbz2ed6r9C7zlDo6NEBnrUZyRvnSOKZL6jt7S9Pt_9hlTccPIAZv-f28u76xRGB3759SuQ/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyI23LWOO28ESB0mSxApSu9-lQLsM09q_Z_Kwo6-XiGSAI2TX5rG4l6CtvUWcYNBMNr/exec';
 const YOUR_CLIENT_ID = '876557140858-2mc16osg1aojod8jqvgsa35mvck0a55p.apps.googleusercontent.com';
 const YOUR_REDIRECT_URI = 'https://visitorbookhk.github.io/register';
 const lang_op = {
